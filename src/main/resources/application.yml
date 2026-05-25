@@ -1,3 +1,12 @@
 spring:
   application:
     name: hello-world
+
+app:
+  jwt:
+    # Base64-encoded secret (min 256 bits for HS256). In production, move to an env var.
+    secret: bXktc3VwZXItc2VjcmV0LWp3dC1zaWduaW5nLWtleS1mb3ItaHMyNTYtbXVzdC1iZS1hdC1sZWFzdC0zMi1ieXRlcw==
+    expiration-ms: 86400000   # 24 hours
+  security:
+    username: user
+    password: password123
