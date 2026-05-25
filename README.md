@@ -19,4 +19,4 @@ A cobertura é feita por três Spock Specifications: um **teste unitário** do `
 
 ## Replicando o projeto
 
-Este projeto foi inteiramente gerado com o auxílio do **Claude**. O prompt utilizado para reproduzi-lo do zero está disponível em [`prompts.md`](./prompts.md) — basta utilizá-lo em uma nova sessão para obter a mesma estrutura, stack e cobertura de testes.
+Este projeto foi inteiramente gerado com o auxílio do **Claude**. O prompt utilizado para reproduzi-lo do zero está disponível em [`prompts/prompts.md`](./prompts/prompts.md) — basta utilizá-lo em uma nova sessão para obter a mesma estrutura, stack e cobertura de testes.
