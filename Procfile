@@ -1,0 +1,1 @@
+web: java -jar build/libs/hello-world-0.0.1-SNAPSHOT.jar --server.port=$PORT
