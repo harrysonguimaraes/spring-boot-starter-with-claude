@@ -2,7 +2,7 @@ package com.example.helloworld.controller
 
 import com.example.helloworld.security.SecurityConfig
 import com.example.helloworld.security.JwtUtil
-import com.example.helloworld.security.controller.AuthController
+import com.example.helloworld.controller.AuthController
 import org.junit.jupiter.api.extension.ExtendWith
 import org.spockframework.spring.SpringBean
 import org.springframework.beans.factory.annotation.Autowired

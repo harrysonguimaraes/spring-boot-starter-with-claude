@@ -6,10 +6,12 @@ class JwtUtilSpec extends Specification {
 
     JwtUtil jwtUtil = new JwtUtil()
 
+    static final String TEST_SECRET = "dGVzdC1zZWNyZXQta2V5LWZvci11bml0LXRlc3RzLW11c3QtYmUtYXQtbGVhc3QtMzItYnl0ZXM="
+
     def setup() {
-        // Inject values that would normally come from application.yml
-        jwtUtil.secret = "bXktc3VwZXItc2VjcmV0LWp3dC1zaWduaW5nLWtleS1mb3ItaHMyNTYtbXVzdC1iZS1hdC1sZWFzdC0zMi1ieXRlcw=="
+        jwtUtil.secret = TEST_SECRET
         jwtUtil.expirationMs = 86400000L
+        jwtUtil.init()   // simulate @PostConstruct — builds the cached signingKey
     }
 
     def "generateToken should return a non-blank JWT"() {

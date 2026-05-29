@@ -3,6 +3,7 @@ package com.example.helloworld.integration
 import com.fasterxml.jackson.databind.ObjectMapper
 import org.junit.jupiter.api.extension.ExtendWith
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.junit.jupiter.SpringExtension
@@ -27,9 +28,15 @@ class HelloWorldIntegrationSpec extends Specification {
     @Autowired
     ObjectMapper objectMapper
 
+    @Value('${app.security.username}')
+    String username
+
+    @Value('${app.security.password}')
+    String password
+
     def "GET /hello-world with valid JWT returns 200"() {
         given: "a valid JWT obtained from login"
-        def loginBody = '{"username":"user","password":"password123"}'
+        def loginBody = """{"username":"$username","password":"$password"}"""
         def loginResult = mockMvc.perform(
                 post("/auth/login")
                         .contentType(APPLICATION_JSON)

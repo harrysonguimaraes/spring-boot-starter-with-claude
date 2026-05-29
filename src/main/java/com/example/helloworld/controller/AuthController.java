@@ -1,11 +1,11 @@
-package com.example.helloworld.security.controller;
+package com.example.helloworld.controller;
 
 import com.example.helloworld.dto.LoginRequest;
 import com.example.helloworld.dto.LoginResponse;
 import com.example.helloworld.security.JwtUtil;
+import jakarta.validation.Valid;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
