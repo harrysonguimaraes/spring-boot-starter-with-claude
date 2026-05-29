@@ -8,7 +8,6 @@ Update this file as the project evolves. Run `/deploy-check` in any session to v
 
 ### Code
 - [ ] All tests passing (`./gradlew test` — BUILD SUCCESSFUL)
-- [ ] PR approved by at least one reviewer
 - [ ] Branch up to date with `main` (no merge conflicts)
 - [ ] No debug or WIP commits in history
 
