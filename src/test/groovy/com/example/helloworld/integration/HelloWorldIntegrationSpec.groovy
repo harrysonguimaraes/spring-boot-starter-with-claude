@@ -15,7 +15,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*
 
-@ExtendWith(SpringExtension) // ← "hey JUnit 5, use Spring to manage this test"
+@ExtendWith(SpringExtension)
+//"hey JUnit 5, use Spring to manage this test"
 @SpringBootTest
 //Full application context — every bean loaded
 //Closest to production. Slow.

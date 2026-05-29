@@ -1,8 +1,7 @@
 package com.example.helloworld.controller
 
-import com.example.helloworld.security.SecurityConfig
 import com.example.helloworld.security.JwtUtil
-import com.example.helloworld.controller.AuthController
+import com.example.helloworld.security.SecurityConfig
 import org.junit.jupiter.api.extension.ExtendWith
 import org.spockframework.spring.SpringBean
 import org.springframework.beans.factory.annotation.Autowired
@@ -17,7 +16,8 @@ import spock.lang.Specification
 
 import static org.springframework.http.MediaType.APPLICATION_JSON
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 
 @ExtendWith(SpringExtension)
 @WebMvcTest(AuthController)
