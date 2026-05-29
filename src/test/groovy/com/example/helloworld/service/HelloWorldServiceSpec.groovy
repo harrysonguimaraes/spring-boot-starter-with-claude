@@ -7,12 +7,12 @@ class HelloWorldServiceSpec extends Specification {
 
     HelloWorldService service = new HelloWorldService()
 
-    def "should return a HelloWorldResponse with 'hello world!' as texto"() {
+    def "should return a HelloWorldResponse with 'hello world!' as text"() {
         when:
         HelloWorldResponse response = service.getHelloWorld()
 
         then:
         response != null
-        response.texto() == "hello world!"
+        response.text() == "hello world!"
     }
 }

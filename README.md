@@ -1,6 +1,6 @@
 # hello-world-spring-claude
 
-Este projeto é uma API REST minimalista desenvolvida com **Spring Boot**, criada como projeto de referência para demonstrar uma estrutura bem organizada com boas práticas desde o primeiro commit. O endpoint principal, `GET /hello-world`, retorna um simples JSON `{"texto": "hello world!"}` e serve como ponto de partida para qualquer API Spring Boot construída sobre essa base.
+Este projeto é uma API REST minimalista desenvolvida com **Spring Boot**, criada como projeto de referência para demonstrar uma estrutura bem organizada com boas práticas desde o primeiro commit. O endpoint principal, `GET /hello-world`, retorna um simples JSON `{"text": "hello world!"}` e serve como ponto de partida para qualquer API Spring Boot construída sobre essa base.
 
 ## Stack
 

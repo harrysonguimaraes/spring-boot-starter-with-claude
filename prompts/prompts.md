@@ -8,7 +8,7 @@ Arquivo de configuração: application.yml (nunca .properties)
 Classe principal: Main.java (nunca Application.java)
 Componentes obrigatórios
 
-Um @RestController com endpoint GET /hello-world retornando {"texto": "hello world!"} em JSON
+Um @RestController com endpoint GET /hello-world retornando {"text": "hello world!"} em JSON
 Um @Service injetado no controller, responsável pela lógica de negócio
 Um DTO/record para a resposta
 Testes — usar Spock (nunca JUnit)

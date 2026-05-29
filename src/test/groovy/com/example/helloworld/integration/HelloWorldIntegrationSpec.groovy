@@ -14,13 +14,15 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*
 
-@ExtendWith(SpringExtension)
+@ExtendWith(SpringExtension) // ← "hey JUnit 5, use Spring to manage this test"
 @SpringBootTest
+//Full application context — every bean loaded
+//Closest to production. Slow.
 @AutoConfigureMockMvc
 class HelloWorldIntegrationSpec extends Specification {
 
     @Autowired
-    MockMvc mockMvc
+    MockMvc mockMvc // ← Spring injects this because of SpringExtension
 
     @Autowired
     ObjectMapper objectMapper
@@ -44,7 +46,7 @@ class HelloWorldIntegrationSpec extends Specification {
         then:
         result.andExpect(status().isOk())
               .andExpect(content().contentType(APPLICATION_JSON))
-              .andExpect(jsonPath('$.texto').value("hello world!"))
+              .andExpect(jsonPath('$.text').value("hello world!"))
     }
 
     def "GET /hello-world without JWT returns 401"() {
