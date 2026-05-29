@@ -44,7 +44,6 @@ Update this file as the project evolves. Run `/deploy-check` in any session to v
 
 - [ ] Startup logs clean — no `BeanCreationException` or `Could not resolve placeholder` errors
 - [ ] PR merged and feature branch deleted
-- [ ] Postman collection `baseUrl` variable updated to the production URL
 
 ---
 
