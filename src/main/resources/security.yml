@@ -1,0 +1,7 @@
+app:
+  jwt:
+    secret: ${JWT_SECRET}
+    expiration-ms: 86400000   # 24 hours
+  security:
+    username: ${APP_USERNAME}
+    password: ${APP_PASSWORD}
