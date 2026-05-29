@@ -1,22 +1,46 @@
-# hello-world-spring-claude
+# spring-boot-starter-with-claude
 
-Este projeto é uma API REST minimalista desenvolvida com **Spring Boot**, criada como projeto de referência para demonstrar uma estrutura bem organizada com boas práticas desde o primeiro commit. O endpoint principal, `GET /hello-world`, retorna um simples JSON `{"text": "hello world!"}` e serve como ponto de partida para qualquer API Spring Boot construída sobre essa base.
+A **Spring Boot starter project** with a pre-defined stack, scaffolding, and security configuration — built as a reference baseline so every new Spring API starts from a solid foundation rather than from scratch.
+
+The project ships with JWT + API Key authentication, centralized exception handling, config split by concern, and a full Spock test suite covering unit, slice, and integration layers. The included `GET /hello-world` endpoint is intentionally minimal — it exists to exercise the security layer, not as business logic.
 
 ## Stack
 
-- **Java 17** com **Spring Boot 3.2.5** e build via **Gradle**
-- **Spring Web** para exposição dos endpoints REST
-- **Spock Framework 2.4-M4** (Groovy 4) como framework de testes — substituindo completamente o JUnit — com testes escritos em estilo BDD (`given / when / then`)
-- Configuração via `application.yml`
+- **Java 17** · **Spring Boot 3.2.5** · **Gradle**
+- **Spring Web** — REST endpoint exposure
+- **Spring Security** — JWT (human users) and API Key (service-to-service) authentication
+- **JJWT 0.12.6** — JWT generation and validation
+- **spring-dotenv** — secrets loaded from `.env`, never committed
+- **spring-boot-starter-validation** — `@NotBlank` request validation
+- **Spock Framework 2.4-M4** (Groovy 4) — BDD-style tests replacing JUnit entirely (`given / when / then`)
+- Configuration via `application.yml` + `security.yml`
 
-## Arquitetura
+## Architecture
 
-O projeto segue uma separação de responsabilidades em camadas: o `HelloWorldController` (`@RestController`) recebe as requisições HTTP e delega a lógica de negócio ao `HelloWorldService` (`@Service`), que constrói e retorna o DTO de resposta (`HelloWorldResponse`). Essa separação, mesmo num projeto simples, garante que controller e serviço possam ser testados de forma independente.
+The project is organized into four layers:
 
-## Testes
+- **`security/`** — `SecurityConfig`, `JwtUtil`, `JwtAuthenticationFilter`, `ApiKeyAuthenticationFilter`. Security is always wired up first; business controllers are protected by default.
+- **`controller/`** — `AuthController` (`POST /auth/login`), the business `HelloWorldController`, and `GlobalExceptionHandler` (`@RestControllerAdvice`) for centralized error responses.
+- **`service/`** — business logic decoupled from HTTP concerns.
+- **`dto/`** — `LoginRequest`, `LoginResponse`, `ErrorResponse`, and response records as Java Records.
 
-A cobertura é feita por três Spock Specifications: um **teste unitário** do `@Service` instanciado diretamente (sem contexto Spring), um **teste de slice** do `@RestController` usando `@WebMvcTest` com stub via `@SpringBean`, e um **teste de integração** com `@SpringBootTest + @AutoConfigureMockMvc` que sobe o contexto completo e valida o endpoint de ponta a ponta. Todos os testes passam com `./gradlew test`.
+Config is split by concern: `application.yml` imports `security.yml`, and all credentials are resolved at runtime from environment variables via `.env`.
 
-## Replicando o projeto
+## Tests
 
-Este projeto foi inteiramente gerado com o auxílio do **Claude**. O prompt utilizado para reproduzi-lo do zero está disponível em [`prompts/prompts.md`](./prompts/prompts.md) — basta utilizá-lo em uma nova sessão para obter a mesma estrutura, stack e cobertura de testes.
+Six Spock Specifications cover every layer:
+
+| Spec | Type | What it tests |
+|---|---|---|
+| `HelloWorldServiceSpec` | Unit | Service logic, no Spring context |
+| `HelloWorldControllerSpec` | `@WebMvcTest` slice | 401 returned without a valid credential |
+| `AuthControllerSpec` | `@WebMvcTest` slice | Login flow: valid → 200, bad credentials → 401, blank fields → 400 |
+| `JwtUtilSpec` | Unit | Token generation, subject extraction, tampered token rejection |
+| `ApiKeyAuthenticationFilterSpec` | `@WebMvcTest` slice | Valid key → 200, invalid key → 401, missing key → 401 |
+| `HelloWorldIntegrationSpec` | `@SpringBootTest` | Full end-to-end: login, extract token, call protected endpoint |
+
+All tests pass with `./gradlew test`.
+
+## Replicating the project
+
+This project was built entirely with **Claude**. The prompt used to reproduce it from scratch is available at [`prompts/prompts.md`](./prompts/prompts.md) — use it in a new session to get the same structure, stack, security setup, and test coverage.
