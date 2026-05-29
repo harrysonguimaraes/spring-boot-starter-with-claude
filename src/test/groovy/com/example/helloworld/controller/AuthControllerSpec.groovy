@@ -24,7 +24,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @Import(SecurityConfig)
 @TestPropertySource(properties = [
         "app.security.username=user",
-        "app.security.password=password"
+        "app.security.password=password",
+        "app.security.api-key=test-api-key"
 ])
 class AuthControllerSpec extends Specification {
 
