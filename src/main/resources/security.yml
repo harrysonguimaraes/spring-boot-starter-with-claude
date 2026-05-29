@@ -5,3 +5,4 @@ app:
   security:
     username: ${APP_USERNAME}
     password: ${APP_PASSWORD}
+    api-key: ${API_KEY}
