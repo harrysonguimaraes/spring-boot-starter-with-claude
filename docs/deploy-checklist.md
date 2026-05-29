@@ -16,7 +16,7 @@ Update this file as the project evolves. Run `/deploy-check` in any session to v
   - `JWT_SECRET` (base64-encoded, minimum 32 bytes)
   - `APP_USERNAME`
   - `APP_PASSWORD`
-  - `APP_API_KEY`
+  - `API_KEY`
 - [ ] `JWT_SECRET` is unique per environment (do not reuse dev value in prod)
 - [ ] `.env` is **not** committed to the repository (verify `.gitignore`)
 - [ ] On Railway: variables set in the project's **Variables** tab (not via `.env` file)
