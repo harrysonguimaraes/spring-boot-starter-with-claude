@@ -1,6 +1,6 @@
 package com.example.helloworld.controller
 
-import com.example.helloworld.dto.HelloWorldResponse
+import com.example.helloworld.security.JwtUtil
 import com.example.helloworld.service.HelloWorldService
 import org.junit.jupiter.api.extension.ExtendWith
 import org.spockframework.spring.SpringBean
@@ -24,16 +24,14 @@ class HelloWorldControllerSpec extends Specification {
     @SpringBean
     HelloWorldService helloWorldService = Stub()
 
-    def "GET /hello-world should return JSON with texto 'hello world!'"() {
-        given:
-        helloWorldService.getHelloWorld() >> new HelloWorldResponse("hello world!")
+    @SpringBean
+    JwtUtil jwtUtil = Stub()
 
+    def "GET /hello-world without authentication returns 401"() {
         when:
         def result = mockMvc.perform(get("/hello-world").accept(MediaType.APPLICATION_JSON))
 
         then:
-        result.andExpect(status().isOk())
-              .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-              .andExpect(jsonPath('$.texto').value("hello world!"))
+        result.andExpect(status().isUnauthorized())
     }
 }
