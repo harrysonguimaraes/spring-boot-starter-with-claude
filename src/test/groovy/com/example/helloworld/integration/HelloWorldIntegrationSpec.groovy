@@ -1,15 +1,17 @@
 package com.example.helloworld.integration
 
+import com.fasterxml.jackson.databind.ObjectMapper
 import org.junit.jupiter.api.extension.ExtendWith
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.http.MediaType
 import org.springframework.test.context.junit.jupiter.SpringExtension
 import org.springframework.test.web.servlet.MockMvc
 import spock.lang.Specification
 
+import static org.springframework.http.MediaType.APPLICATION_JSON
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*
 
 @ExtendWith(SpringExtension)
@@ -20,13 +22,36 @@ class HelloWorldIntegrationSpec extends Specification {
     @Autowired
     MockMvc mockMvc
 
-    def "GET /hello-world should return {'texto': 'hello world!'} end-to-end"() {
+    @Autowired
+    ObjectMapper objectMapper
+
+    def "GET /hello-world with valid JWT returns 200"() {
+        given: "a valid JWT obtained from login"
+        def loginBody = '{"username":"user","password":"password123"}'
+        def loginResult = mockMvc.perform(
+                post("/auth/login")
+                        .contentType(APPLICATION_JSON)
+                        .content(loginBody))
+                .andReturn()
+        def token = objectMapper.readTree(loginResult.response.contentAsString).get("token").asText()
+
         when:
-        def result = mockMvc.perform(get("/hello-world").accept(MediaType.APPLICATION_JSON))
+        def result = mockMvc.perform(
+                get("/hello-world")
+                        .header("Authorization", "Bearer $token")
+                        .accept(APPLICATION_JSON))
 
         then:
         result.andExpect(status().isOk())
-              .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+              .andExpect(content().contentType(APPLICATION_JSON))
               .andExpect(jsonPath('$.texto').value("hello world!"))
+    }
+
+    def "GET /hello-world without JWT returns 401"() {
+        when:
+        def result = mockMvc.perform(get("/hello-world").accept(APPLICATION_JSON))
+
+        then:
+        result.andExpect(status().isUnauthorized())
     }
 }
