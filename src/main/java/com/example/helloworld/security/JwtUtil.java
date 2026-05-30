@@ -54,8 +54,11 @@ public class JwtUtil {
     }
 
     public boolean isNearExpiration(String token) {
-        Date expiration = extractClaims(token).getExpiration();
-        return expiration.getTime() - System.currentTimeMillis() < refreshWindowMs;
+        return isNearExpiration(extractClaims(token));
+    }
+
+    public boolean isNearExpiration(Claims claims) {
+        return claims.getExpiration().getTime() - System.currentTimeMillis() < refreshWindowMs;
     }
 
     public Claims extractClaims(String token) {
