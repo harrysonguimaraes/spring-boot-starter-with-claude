@@ -21,6 +21,9 @@ public class JwtUtil {
     @Value("${app.jwt.expiration-ms}")
     private long expirationMs;
 
+    @Value("${app.jwt.refresh-window-ms:7200000}")
+    private long refreshWindowMs;
+
     private SecretKey signingKey;
 
     @PostConstruct
@@ -48,6 +51,11 @@ public class JwtUtil {
         } catch (JwtException | IllegalArgumentException e) {
             return false;
         }
+    }
+
+    public boolean isNearExpiration(String token) {
+        Date expiration = extractClaims(token).getExpiration();
+        return expiration.getTime() - System.currentTimeMillis() < refreshWindowMs;
     }
 
     public Claims extractClaims(String token) {
