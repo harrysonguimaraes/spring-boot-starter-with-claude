@@ -50,6 +50,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                         new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
                 authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 SecurityContextHolder.getContext().setAuthentication(authentication);
+
+                if (jwtUtil.isNearExpiration(token)) {
+                    response.setHeader("X-Refreshed-Token", jwtUtil.generateToken(username));
+                }
             }
         } catch (JwtException | IllegalArgumentException ignored) {
             // invalid or expired token — continue unauthenticated
